@@ -66,42 +66,36 @@ def main():
 
         # trigonometry operations
         elif choice == 2:
-            # instantiate the trigonometry class
-            trigo_calci = calci.Trigonometry()
-            # print user menu for trigonometry
+            trig_calci = calci.Trigonometry()
             calci.print_trigonometry_menu()
             operation = 'wrong'
             while operation not in ['A', 'B', 'C', 'D', 'E', 'F']:
                 operation = input(
                     "Choose any of the above, (enter a,b,c,d,e, or f): ").upper()
-            # sin
             if operation == 'A':
-                angle: float = calci.input_angle()
-                calculator.current_val = trigo_calci.sine(angle)
-                print(f"sin({angle}) = {calculator.current_val}")
-
+                a = float(input("Enter the angle: "))
+                result = trig_calci.sine(a, calculator.mode)
+                print(f"Sine of {a} is {result}")
             elif operation == 'B':
-                angle: float = calci.input_angle()
-                calculator.current_val = trigo_calci.cosine(angle)
-                print(f"cos({angle}) = {calculator.current_val}")
-
+                a = float(input("Enter the angle: "))
+                result = trig_calci.cosine(a, calculator.mode)
+                print(f"Cosine of {a} is {result}")
             elif operation == 'C':
-                angle: float = calci.input_angle()
-                calculator.current_val = trigo_calci.tangent(angle)
-                print(f"tan({angle}) = {calculator.current_val}")
-
+                a = float(input("Enter the angle: "))
+                result = trig_calci.tangent(a, calculator.mode)
+                print(f"Tangent of {a} is {result}")
             elif operation == 'D':
-                angle: float = calci.input_angle()
-                calculator.current_val = trigo_calci.arcsine(angle)
-                print(f"arcsin({angle}) = {calculator.current_val}")
+                a = float(input("Enter the value: "))
+                result = trig_calci.arcsine(a, calculator.mode)
+                print(f"Arcsine of {a} is {result}")
             elif operation == 'E':
-                angle: float = calci.input_angle()
-                calculator.current_val = trigo_calci.arccosine(angle)
-                print(f"arccos({angle}) = {calculator.current_val}")
+                a = float(input("Enter the value: "))
+                result = trig_calci.arccosine(a, calculator.mode)
+                print(f"Arccosine of {a} is {result}")
             elif operation == 'F':
-                angle: float = calci.input_angle()
-                calculator.current_val = trigo_calci.arctangent(angle)
-                print(f"arctan({angle}) = {calculator.current_val}")
+                a = float(input("Enter the value: "))
+                result = trig_calci.arctangent(a, calculator.mode)
+                print(f"Arctangent of {a} is {result}")
             else:
                 pass
             # # ask user for continuation

@@ -49,46 +49,43 @@ class Arithmetic(Calculator):
 # child trigonometric class (returns angle in radians by default -> convert to degrees because calc mode is D by default)
 
 
-class Trigonometry(Calculator):
+class Trigonometry:
 
-    def _convert_to_radians(self, a: float) -> float:
-        return math.radians(a) if self.mode == 'D' else a
+    def _convert_to_radians(self, a: float, mode: str) -> float:
+        return math.radians(a) if mode == 'D' else a
 
-    def _convert_to_degrees(self, a: float) -> float:
-        return math.degrees(a) if self.mode == 'R' else a
+    def _convert_to_degrees(self, a: float, mode: str) -> float:
+        return math.degrees(a) if mode == 'R' else a
 
-    def sine(self, a):
-        print(f"Mode: {self.mode}, Angle before conversion: {a}")
-        a_rad = self._convert_to_radians(a)
+    def sine(self, a, mode):
+        print(f"Mode: {mode}, Angle before conversion: {a}")
+        a_rad = self._convert_to_radians(a, mode)
         print(f"Angle in radians: {a_rad}")
-        self.current_val = math.sin(a_rad)
-        return self.current_val
+        return math.sin(a_rad)
 
-    def cosine(self, a):
-        a_rad = self._convert_to_radians(a)
-        self.current_val = math.cos(a_rad)
-        return self.current_val
+    def cosine(self, a, mode):
+        a_rad = self._convert_to_radians(a, mode)
+        return math.cos(a_rad)
 
-    def tangent(self, a):
-        a_rad = self._convert_to_radians(a)
-        self.current_val = math.tan(a_rad)
-        return self.current_val
+    def tangent(self, a, mode):
+        a_rad = self._convert_to_radians(a, mode)
+        return math.tan(a_rad)
 
-    def arcsine(self, a):
+    def arcsine(self, a, mode):
         if not -1 <= a <= 1:
             raise ValueError("Input should be within the range [-1, 1]")
-        self.current_val = math.asin(a)
-        return self._convert_to_degrees(self.current_val)
+        result = math.asin(a)
+        return self._convert_to_degrees(result, mode)
 
-    def arccosine(self, a):
+    def arccosine(self, a, mode):
         if not -1 <= a <= 1:
             raise ValueError("Input should be within the range [-1, 1]")
-        self.current_val = math.acos(a)
-        return self._convert_to_degrees(self.current_val)
+        result = math.acos(a)
+        return self._convert_to_degrees(result, mode)
 
-    def arctangent(self, a):
-        self.current_val = math.atan(a)
-        return self._convert_to_degrees(self.current_val)
+    def arctangent(self, a, mode):
+        result = math.atan(a)
+        return self._convert_to_degrees(result, mode)
 
 
 # child logarithm class
