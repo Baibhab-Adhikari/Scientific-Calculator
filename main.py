@@ -1,9 +1,39 @@
+"""
+Main Script for Scientific Calculator
+
+This script serves as the entry point for the scientific calculator application.
+It provides a user interface for performing various calculations, including arithmetic,
+trigonometric, logarithmic, and power operations. The script also allows users to change
+the calculator mode between degrees and radians.
+
+Author: Baibhab Adhikari
+Github: https://github.com/Baibhab-Adhikari
+Date: July,2024
+
+Functions:
+    - main(): The main function that runs the calculator application.
+
+Usage:
+    Run this script to start the scientific calculator application. Follow the on-screen
+    prompts to perform different calculations.
+
+"""
+
 import calc_class as calci
 # global bool flag
 calculation = True
 
 
 def main():
+    """
+    The main function that runs the calculator application.
+
+    This function initializes the calculator, displays the main menu, and handles user input
+    to perform various calculations. It supports changing the calculator mode, performing
+    arithmetic operations, and more.
+
+    The function runs in a loop until the user chooses to exit the application.
+    """
     global calculation
     calculator = calci.Calculator()
     while (calculation):
@@ -26,7 +56,6 @@ def main():
             while mode not in ['D', 'R']:
                 mode = input("Enter D or R to change mode: ").upper()
                 calculator.change_mode(mode)
-                print(f"Calculator mode changed to {calculator.mode}")
 
         # arithmetic operations
         elif choice == 1:
@@ -86,6 +115,7 @@ def main():
                 print(f"Tangent of {a} is {result}")
             elif operation == 'D':
                 a = float(input("Enter the value: "))
+                print(f"Current mode: {calculator.mode}")
                 result = trig_calci.arcsine(a, calculator.mode)
                 print(f"Arcsine of {a} is {result}")
             elif operation == 'E':
@@ -98,8 +128,6 @@ def main():
                 print(f"Arctangent of {a} is {result}")
             else:
                 pass
-            # # ask user for continuation
-            # calci.continue_calculator()
 
         # logarithm operations
         elif choice == 3:
@@ -107,11 +135,15 @@ def main():
             log_calci = calci.Logarithm()
             print("Default base for logarithm is e...")
             # input x and base from user
-            x, base = calci.log_input()
-            calculator.current_val = log_calci.log(x, base)
-            print(f"log of {x} to base {base} = {calculator.current_val}")
-            # # ask user for continuation
-            # calci.continue_calculator()
+            x = calci.log_input()
+            base = input("Enter base of log (leave blank for e): ")
+            if base == "":
+                calculator.current_val = log_calci.log(x, calci.E)
+                print(f"log of {x} to base 'e' = {calculator.current_val}")
+            else:
+                base = float(base)
+                calculator.current_val = log_calci.log(x, base)
+                print(f"log of {x} to base {base} = {calculator.current_val}")
 
         # power/exponent operations
         elif choice == 4:
@@ -124,7 +156,7 @@ def main():
                 operation = input(
                     "Choose any of the above, (enter a,b, or c): ").upper()
             if operation == 'A':
-                b, p = calci.input_two_operands()
+                b, p = calci.power_input()
                 calculator.current_val = power_calci.exponent(b, p)
                 print(f"{b} raised to {p} = {calculator.current_val}")
             elif operation == 'B':
@@ -137,8 +169,6 @@ def main():
                 print(f"Cube root of {x} = {calculator.current_val}")
             else:
                 pass
-            # # ask user for continuation
-            # calci.continue_calculator()
 
         # complex operations
         elif choice == 5:
@@ -155,15 +185,15 @@ def main():
                     z: complex = complex(
                         input("Enter complex number in rectangular form: "))
                     calculator.current_val = complex_calci.to_polar(z)
-                    for r, phi in calculator.current_val:
-                        print(f"r = {r}")
-                        print(f"phi = {phi}")
+                    print(f"Polar form of {z} = {calculator.current_val}")
+
                 elif operation == 'B':
                     r, phi = calci.complex_input()
+                    calculator.current_val = complex_calci.to_rect(r, phi)
+                    print(f"Rectangular form of {r},{
+                          phi} = {calculator.current_val}")
                 else:
                     pass
-                # # ask user for continuation
-                # calci.continue_calculator()
 
         # exiting the calculator app
         elif choice == 7:
