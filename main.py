@@ -206,6 +206,7 @@ def main():
             calculation = calci.continue_calculator()
             if not calculation:
                 print("Thanks for using the Scientific Calculator!")
+                print("Exiting the program.....")
 
 
 if __name__ == "__main__":
