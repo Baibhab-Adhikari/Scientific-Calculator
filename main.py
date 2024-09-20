@@ -26,7 +26,7 @@ calculation = True
 
 def main():
     """
-    The main function that runs the calculator application.
+    
 
     This function initializes the calculator, displays the main menu, and handles user input
     to perform various calculations. It supports changing the calculator mode, performing
