@@ -17,7 +17,7 @@ Classes:
     - Log: Handles logarithmic calculations.
 
 Global Variables:
-    - E: The mathematical constant e (Euler's number).
+    - E: The mathematical constant e.
 
 Usage:
     This module can be imported and used to create instances of the Calculator,
@@ -25,12 +25,13 @@ Usage:
 
 
 """
+
 # imports
 import math
 import cmath
 
 # global variables
-E: float = math.e
+E = math.e
 
 # abstract Calculator class
 
@@ -44,17 +45,19 @@ class Calculator:
     """
 
     def __init__(self) -> None:
-        self.current_val = 0  # default value is 0
-        self.mode = 'D'  # default mode is Degree
+        self.current_val = 0.0  # default value is 0.0
+        self.mode = "D"  # default mode is Degree
 
     def __str__(self) -> str:
         return f"The mode of calculator is {self.mode}"
 
     def change_mode(self, mode: str) -> None:
-        if mode in ['D', 'R']:
+        if mode in ["D", "R"]:
             self.mode = mode
         else:
             print("Invalid mode. Mode not changed.")
+
+
 # child arithmetic class
 
 
@@ -66,25 +69,27 @@ class Arithmetic(Calculator):
     Inherits mode and current value management from Calculator.
     """
 
-    def addition(self, a: float, b: float):
+    def addition(self, a, b):
         self.current_val = a + b
         return self.current_val
 
-    def subtraction(self, a: float, b: float):
+    def subtraction(self, a, b):
         self.current_val = a - b
         return self.current_val
 
-    def multiplication(self, a: float, b: float):
+    def multiplication(self, a, b):
         self.current_val = a * b
         return self.current_val
 
-    def division(self, a: float, b: float):
+    def division(self, a, b):
         try:
-            self.current_val = float(a / b)
+            self.current_val = a / b
         except ZeroDivisionError:
             print("Cannot divide by zero!")
             self.current_val = 0
         return self.current_val
+
+
 # child trigonometric class (returns angle in radians by default -> convert to degrees because calc mode is D by default)
 
 
@@ -96,11 +101,11 @@ class Trigonometry:
     Handles conversions between degrees and radians based on the specified mode.
     """
 
-    def _convert_to_radians(self, a: float, mode: str) -> float:
-        return math.radians(a) if mode == 'D' else a
+    def _convert_to_radians(self, a, mode: str):
+        return math.radians(a) if mode == "D" else a
 
-    def _convert_to_degrees(self, a: float, mode: str) -> float:
-        return math.degrees(a) if mode == 'D' else a
+    def _convert_to_degrees(self, a, mode: str):
+        return math.degrees(a) if mode == "D" else a
 
     def sine(self, a, mode):
         a_rad = self._convert_to_radians(a, mode)
@@ -111,8 +116,8 @@ class Trigonometry:
         return round(math.cos(a_rad), 10)  # Round to 10 decimal places
 
     def tangent(self, a, mode):
-        if mode == 'D' and (a % 180 == 90):
-            raise ValueError("Tangent is undefined for 90 + k*180 degrees")
+        if mode == "D" and (a % 180 == 90):
+            raise ValueError(f"Tangent is undefined for {a} degrees")
         a_rad = self._convert_to_radians(a, mode)
         return math.tan(a_rad)
 
@@ -144,7 +149,7 @@ class Logarithm(Calculator):
     Inherits mode and current value management from Calculator.
     """
 
-    def log(self, a: float, base: float = math.e) -> float:
+    def log(self, a, base=math.e) -> float:
         if a <= 0:
             raise ValueError("Input 'a' must be positive.")
         if base <= 0 or base == 1:
@@ -159,6 +164,7 @@ class Logarithm(Calculator):
 
         return self.current_val
 
+
 # child class for exponent operations
 
 
@@ -171,7 +177,7 @@ class Power(Calculator):
     """
 
     def exponent(self, base, power):
-        self.current_val = math.pow(base, power)
+        self.current_val = base**power
         return self.current_val
 
     def root(self, a):
@@ -183,6 +189,8 @@ class Power(Calculator):
     def cube_root(self, a):
         self.current_val = math.cbrt(a)
         return self.current_val
+
+
 # child class for complex number mathematics
 
 
@@ -194,16 +202,18 @@ class Complex(Calculator):
     Inherits mode and current value management from Calculator.
     """
 
-    def to_polar(self, z: complex) -> tuple:
-        self.current_val = cmath.polar(z)
+    def to_polar(self, z: complex):
+        r, phi = cmath.polar(z)
+        self.current_val = (r, phi)  # type: ignore
         return self.current_val
 
-    def to_rect(self, r: float, phi: float) -> complex:
+    def to_rect(self, r, phi):
         self.current_val = cmath.rect(r, phi)
         return self.current_val
 
 
 # functions for extra functionality
+
 
 def reset_current_val(instance):
     """
@@ -229,7 +239,8 @@ def print_menu() -> None:
     print("4.Power")
     print("5.Complex")
     print(
-        "6.Change Calculator Mode (Degrees(D)/ Radians(R). Degree is the default mode")
+        "6.Change Calculator Mode (Degrees(D)/ Radians(R). Degree is the default mode"
+    )
     print("7.Exit")
 
 
@@ -257,7 +268,6 @@ def print_trigonometry_menu() -> None:
     print("D.Arcsine")
     print("E.Arccos")
     print("F.Arctan")
-    print("Choose from the above options (enter from a to f): ")
 
 
 def print_power_menu() -> None:
@@ -281,14 +291,14 @@ def print_complex_menu() -> None:
     print("B.Convert Polar form to Rectangular form")
 
 
-def log_input() -> tuple:
+def log_input() -> float:
     """
-    Prompts the user to enter a value for logarithmic calculations.
+        Prompts the user to enter a value for logarithmic calculations.
 
-    Repeatedly prompts the user until a valid float is entered.
+        Repeatedly prompts the user until a valid value is entered.
 
-    Returns:
-        float: The value entered by the user.
+        Returns:
+    : The value entered by the user.
     """
     while True:
         try:
@@ -300,13 +310,13 @@ def log_input() -> tuple:
 
 def complex_input() -> tuple:
     """
-    Prompts for and returns two float operands for binary operations.
+    Prompts for and returns tw operands for binary operations.
 
     Returns:
-        tuple: A pair of float values representing the two operands.
+        tuple: A pair o values representing the two operands.
 
     Raises:
-        ValueError: If the input cannot be converted to float.
+        ValueError: If the input cannot be converted t.
     """
     while True:
         try:
@@ -319,13 +329,13 @@ def complex_input() -> tuple:
 
 def power_input() -> tuple:
     """
-    Prompts for and returns two float operands for binary operations.
+    Prompts for and returns tw operands for binary operations.
 
     Returns:
-        tuple: A pair of float values representing the two operands.
+        tuple: A pair o values representing the two operands.
 
     Raises:
-        ValueError: If the input cannot be converted to float.
+        ValueError: If the input cannot be converted t.
     """
     while True:
         try:
@@ -338,13 +348,13 @@ def power_input() -> tuple:
 
 def input_two_operands() -> tuple:
     """
-    Prompts for and returns two float operands for binary operations.
+    Prompts for and returns tw operands for binary operations.
 
     Returns:
-        tuple: A pair of float values representing the two operands.
+        tuple: A pair o values representing the two operands.
 
     Raises:
-        ValueError: If the input cannot be converted to float.
+        ValueError: If the input cannot be converted t.
     """
     while True:
         try:
@@ -357,13 +367,13 @@ def input_two_operands() -> tuple:
 
 def input_angle() -> float:
     """
-    Prompt the user to enter an angle and return it as a float.
+        Prompt the user to enter an angle and return it as .
 
-    This function repeatedly prompts the user to enter a valid angle until a valid float is provided.
-    If the user enters an invalid value, an error message is displayed and the user is prompted again.
+        This function repeatedly prompts the user to enter a valid angle until a vali is provided.
+        If the user enters an invalid value, an error message is displayed and the user is prompted again.
 
-    Returns:
-        float: The angle entered by the user.
+        Returns:
+    : The angle entered by the user.
     """
     while True:
         try:
@@ -380,9 +390,9 @@ def continue_calculator() -> bool:
     Returns:
         bool: True if the user wants to continue, False otherwise.
     """
-    choice = 'wrong'
-    while choice not in ['y', 'n']:
+    choice = "wrong"
+    while choice not in ["y", "n"]:
         choice = input("Do you wish to continue calculations? (y/n): ").lower()
-    if choice == 'y':
+    if choice == "y":
         return True
     return False
