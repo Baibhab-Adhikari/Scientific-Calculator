@@ -242,6 +242,7 @@ def print_menu() -> None:
         "6.Change Calculator Mode (Degrees(D)/ Radians(R). Degree is the default mode"
     )
     print("7.Exit")
+    print("8.Reset Current Value")
 
 
 def print_arithmetic_menu() -> None:

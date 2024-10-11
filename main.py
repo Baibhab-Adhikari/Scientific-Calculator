@@ -39,15 +39,16 @@ def main() -> None:
     calculator = calci.Calculator()
     while calculation:
         # instantiate new calculator and print the user menu and reset current value
-        print(f"Calculator Mode: {calculator.mode}")
         calci.print_menu()
-        calci.reset_current_val(calculator)
+        print()  # newline
+        print(f"Calculator Mode: {calculator.mode}")
+        print()  # newline
         choice: int = -1
-        while choice not in range(1, 8):
+        while choice not in range(1, 9):
             try:
-                choice = int(input("Please choose from 1 to 7: "))
+                choice = int(input("Please choose from 1 to 8: "))
             except ValueError:
-                print("Invalid input. Please enter a number from 1 to 7.")
+                print("Invalid input!")
 
         # conditionals based on the choice of the user
 
@@ -57,6 +58,11 @@ def main() -> None:
             while mode not in ["D", "R"]:
                 mode = input("Enter D or R to change mode: ").upper()
                 calculator.change_mode(mode)
+
+        # reseting the current value of the calculator
+        elif choice == 8:
+            calci.reset_current_val(calculator)
+            print("Current value has been reset to zero...\n")
 
         # arithmetic operations
         elif choice == 1:
@@ -90,9 +96,6 @@ def main() -> None:
                 a, b = calci.input_two_operands()
                 calculator.current_val = arithmetic_calci.division(a, b)
                 print(f"{a} divided by {b} is {calculator.current_val}")
-            else:
-                pass
-            # ask user for continuation
 
         # trigonometry operations
         elif choice == 2:
